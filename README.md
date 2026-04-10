@@ -91,6 +91,27 @@ node server.js
 
 브라우저에서 → `http://localhost:8000`
 
+### GitHub Pages로 UI 공유하기
+
+현재 `public/` 아래의 운영 시스템 UI 목업은 정적 파일이라 GitHub Pages로 바로 배포할 수 있습니다.
+
+- 배포 대상: `public/index.html`, `public/style.css`, `public/app.js`
+- 배포 방식: `main` 브랜치에 push 하면 GitHub Actions가 Pages에 자동 배포
+- 예상 링크: `https://jongrionro-debug.github.io/BIGLETTER/`
+
+주의할 점:
+
+- GitHub Pages에는 `server.js`와 `/api/*` 백엔드가 올라가지 않습니다.
+- 따라서 지금 배포는 `UI 목업 공유용`입니다.
+- 로컬의 Express 서버와 AI/API 기능은 계속 `npm start`로만 동작합니다.
+
+한 번만 해두면 되는 설정:
+
+1. GitHub 저장소의 `Settings > Pages`로 이동
+2. `Build and deployment`의 Source를 `GitHub Actions`로 선택
+3. 이 레포의 `main` 브랜치에 push
+4. Actions의 `Deploy UI to GitHub Pages` 워크플로우가 끝나면 링크로 접속
+
 ### AI API 연동 (선택)
 
 API 키 없이도 데모 모드로 모든 기능이 동작합니다.
