@@ -1,23 +1,23 @@
 const viewMeta = {
   teacher: {
-    kicker: "Teacher Workspace",
+    kicker: "강사 탭",
     title: "오늘 수업 통합 기록"
   },
   operations: {
-    kicker: "Operations Overview",
+    kicker: "운영 채널",
     title: "운영자 대시보드"
   },
   permissions: {
-    kicker: "Access Control",
-    title: "사용자 · 권한 관리"
+    kicker: "권한 채널",
+    title: "사용자/권한 관리"
   },
   records: {
-    kicker: "Records Center",
-    title: "서류 · 기록 관리"
+    kicker: "기록 보관함",
+    title: "서류/기록 관리"
   },
   insights: {
-    kicker: "Insights",
-    title: "통계 · 성과"
+    kicker: "인사이트",
+    title: "통계/성과"
   }
 };
 
@@ -57,7 +57,7 @@ const statusMeta = {
     className: "status-alert"
   },
   files_review: {
-    label: "첨부 문서 검토 대기",
+    label: "운영자 검토 대기",
     className: "status-neutral"
   }
 };
@@ -68,18 +68,18 @@ const users = [
     name: "김소연",
     accessRole: "operator",
     scope: "전체 마을",
-    note: "최고 권한",
+    note: "운영 총괄 권한",
     updatedAt: "오늘 15:12",
-    history: ["전체 운영 계정으로 생성됨", "권한 변경 내역 없음"]
+    history: ["운영 총괄 계정으로 생성됨", "권한 변경 내역 없음"]
   },
   {
     id: 2,
     name: "이하늘",
     accessRole: "teacher",
     scope: "다로리마을 / 목공 메이커 수업",
-    note: "현장 입력 담당",
+    note: "오늘 수업 통합 기록 담당",
     updatedAt: "오늘 16:24",
-    history: ["다로리마을 강사 권한 유지", "현장 입력 계정으로 확인됨"]
+    history: ["다로리마을 강사 권한 유지", "오늘 수업 통합 기록 계정 확인"]
   },
   {
     id: 3,
@@ -95,9 +95,9 @@ const users = [
     name: "정유나",
     accessRole: "teacher",
     scope: "화양읍 / 마을 탐구 수업",
-    note: "첨부 문서 정상",
+    note: "수업자료/서류 제출 완료",
     updatedAt: "어제 17:52",
-    history: ["화양읍 담당 강사 유지", "첨부 문서 정상 제출"]
+    history: ["화양읍 담당 강사 유지", "수업자료/서류 정상 제출"]
   }
 ];
 
@@ -117,16 +117,16 @@ const teacherForm = {
   memo:
     "재료 소진이 빠른 편이라 다음 회차 전 목재 키트 추가 확보가 필요합니다. 공구 정리 시간은 10분 확보가 적절했습니다.",
   attachments: [
-    { name: "lesson-plan-woodcraft.pdf", desc: "수업자료 · 1.2MB" },
-    { name: "attendance-export-apr10.xlsx", desc: "출석기록 · 324KB" }
+    { name: "오전_수업_지도안.pdf", desc: "수업자료 · 1.2MB" },
+    { name: "전자출석부_20260410.xlsx", desc: "출석 기록 · 324KB" }
   ]
 };
 
 const uploadPool = [
-  { name: "photo-log-apr10.zip", desc: "활동사진 · 8.4MB" },
-  { name: "materials-checklist.docx", desc: "운영서류 · 182KB" },
-  { name: "teacher-note-apr10.hwp", desc: "교육일지 보조 · 94KB" },
-  { name: "consent-form-scan.pdf", desc: "서류 · 642KB" }
+  { name: "활동사진_20260410.zip", desc: "수업자료 · 8.4MB" },
+  { name: "준비물_체크리스트.docx", desc: "운영 서류 · 182KB" },
+  { name: "교육일지_보조메모.hwp", desc: "교육일지 보조 · 94KB" },
+  { name: "참여동의서_스캔.pdf", desc: "운영 서류 · 642KB" }
 ];
 
 const records = [
@@ -141,7 +141,7 @@ const records = [
     journal:
       "새집 프레임 제작을 진행했고 대부분 망치 사용에 빠르게 적응했습니다.",
     attendance: "출석 3명, 지각 1명, 결석 0명",
-    files: ["lesson-plan-woodcraft.pdf", "attendance-export-apr10.xlsx"]
+    files: ["오전_수업_지도안.pdf", "전자출석부_20260410.xlsx"]
   },
   {
     id: 102,
@@ -153,7 +153,7 @@ const records = [
     status: "journal_missing",
     journal: "요약 미제출",
     attendance: "출석 5명, 지각 0명, 결석 0명",
-    files: ["field-guide-spring.pdf"]
+    files: ["봄_생태관찰_활동지.pdf"]
   },
   {
     id: 103,
@@ -166,7 +166,7 @@ const records = [
     journal:
       "마을 지도 작성 활동과 인터뷰 준비를 진행했습니다.",
     attendance: "출석 4명, 지각 0명, 결석 1명",
-    files: ["village-map-notes.docx", "attendance-export-hwayang.xlsx"]
+    files: ["마을지도_활동기록.docx", "전자출석부_화양읍.xlsx"]
   },
   {
     id: 104,
@@ -184,9 +184,9 @@ const records = [
 
 const activityLog = [
   { time: "17:48", text: "목공 메이커 수업 제출 완료" },
-  { time: "17:31", text: "attendance-export-apr10.xlsx 업로드" },
+  { time: "17:31", text: "전자출석부_20260410.xlsx 업로드" },
   { time: "16:58", text: "생태 관찰 수업 교육일지 수정 요청" },
-  { time: "16:24", text: "화양읍 강사 권한 범위 변경" }
+  { time: "16:24", text: "화양읍 강사 접근 범위 변경" }
 ];
 
 const appState = {
@@ -199,9 +199,9 @@ const appState = {
   draftSavedAt: null,
   lastSubmission: {
     title: "생태 관찰 수업 / 2026.04.09",
-    copy: "출석 5명, 교육일지 제출 완료, 첨부 문서 1건",
+    copy: "출석 5명, 교육일지 제출 완료, 수업자료/서류 1건",
     time: "17:48",
-    status: "운영자 확인 전",
+    status: "운영자 검토 대기",
     missing: "없음"
   }
 };
@@ -232,8 +232,10 @@ const fileSummary = document.getElementById("file-summary");
 const prepValue = document.getElementById("prep-value");
 const prepFill = document.getElementById("prep-fill");
 const submissionStatusNote = document.getElementById("submission-status-note");
+const contextSummary = document.getElementById("context-summary");
 const fileList = document.getElementById("file-list");
 const uploadHint = document.getElementById("upload-hint");
+const feedbackList = document.getElementById("feedback-list");
 const userList = document.getElementById("user-list");
 const userDetail = document.getElementById("user-detail");
 const userSearch = document.getElementById("user-search");
@@ -284,6 +286,13 @@ const lastSubmissionNodes = {
   time: document.getElementById("last-submission-time"),
   status: document.getElementById("last-submission-status"),
   missing: document.getElementById("last-submission-missing")
+};
+
+const teacherPrepNodes = {
+  context: document.getElementById("prep-step-context"),
+  attendance: document.getElementById("prep-step-attendance"),
+  journal: document.getElementById("prep-step-journal"),
+  files: document.getElementById("prep-step-files")
 };
 
 function getCurrentUser() {
@@ -442,7 +451,7 @@ function validateTeacherForm() {
   if (!teacherForm.date) errors.push("날짜를 선택해주세요.");
   if (!teacherForm.village) errors.push("마을을 선택해주세요.");
   if (!teacherForm.session) errors.push("수업을 선택해주세요.");
-  if (!teacherForm.summary.trim()) errors.push("교육일지 요약은 필수 입력입니다.");
+  if (!teacherForm.summary.trim()) errors.push("교육일지는 필수 입력입니다.");
   if (teacherForm.attachments.length === 0) {
     errors.push("최소 1개의 수업자료 또는 운영 서류를 첨부해주세요.");
   }
@@ -518,40 +527,69 @@ function renderFileList() {
   uploadHint.textContent = `${teacherForm.attachments.length}개 파일이 제출 대기 상태입니다.`;
 }
 
+function renderFeedbackList() {
+  if (!feedbackList) return;
+
+  feedbackList.innerHTML = attendanceEntries
+    .slice(0, 3)
+    .map(
+      (entry) => `
+        <div class="feedback-item">
+          <div class="feedback-head">
+            <span class="feedback-badge">${entry.name.slice(0, 2)}</span>
+            <strong>${entry.name}</strong>
+          </div>
+          <label class="feedback-field">
+            <textarea rows="2" placeholder="2차 확장 시 학생별 특이사항 메모를 남길 수 있습니다..."></textarea>
+          </label>
+        </div>
+      `
+    )
+    .join("");
+}
+
 function renderTeacherSummary() {
   const errors = validateTeacherForm();
   const presentCount = countAttendanceState("present");
-  const attendanceDone = attendanceEntries.length;
+  const attendanceDone = attendanceEntries.length > 0;
+  const contextReady = Boolean(teacherForm.date && teacherForm.village && teacherForm.session);
   const journalDone = teacherForm.summary.trim().length > 0;
   const filesDone = teacherForm.attachments.length > 0;
   const completedChunks = [
-    teacherForm.date && teacherForm.village && teacherForm.session,
-    attendanceDone > 0,
+    contextReady,
+    attendanceDone,
     journalDone,
     filesDone
   ].filter(Boolean).length;
   const score = Math.round((completedChunks / 4) * 100);
 
+  contextSummary.textContent = contextReady
+    ? "날짜/마을/수업 선택 완료"
+    : "날짜/마을/수업 선택 대기";
   attendanceSummary.textContent = `${presentCount}/${attendanceEntries.length}명 출석 입력 완료`;
-  journalSummary.textContent = journalDone ? "필수 항목 작성 완료" : "수업 요약 입력 필요";
+  journalSummary.textContent = journalDone ? "교육일지 작성 완료" : "교육일지 작성 대기";
   fileSummary.textContent = filesDone
-    ? `${teacherForm.attachments.length}개 업로드 준비`
-    : "첨부 문서 필요";
+    ? `수업자료/서류 ${teacherForm.attachments.length}건 업로드 완료`
+    : "수업자료/서류 업로드 대기";
   prepValue.textContent = `${score}%`;
-  prepFill.style.width = `${score}%`;
+  prepFill.style.setProperty("--prep-progress", `${score}%`);
+  teacherPrepNodes.context?.classList.toggle("is-complete", contextReady);
+  teacherPrepNodes.attendance?.classList.toggle("is-complete", attendanceDone);
+  teacherPrepNodes.journal?.classList.toggle("is-complete", journalDone);
+  teacherPrepNodes.files?.classList.toggle("is-complete", filesDone);
 
   if (errors.length) {
     teacherStatusChip.textContent = "제출 전 확인 필요";
-    submissionStatusNote.textContent = "필수값을 모두 채우면 제출 가능 상태로 전환됩니다.";
+    submissionStatusNote.textContent = "작성 완료 점수";
   } else if (appState.teacherDirty) {
     teacherStatusChip.textContent = "제출 가능";
-    submissionStatusNote.textContent = "현재 입력값 기준으로 제출 가능한 상태입니다.";
+    submissionStatusNote.textContent = "작성 완료 점수";
   } else if (appState.draftSavedAt) {
     teacherStatusChip.textContent = `임시 저장 ${appState.draftSavedAt}`;
-    submissionStatusNote.textContent = "최근 저장본이 반영되어 있습니다. 추가 수정 후 다시 제출할 수 있습니다.";
+    submissionStatusNote.textContent = "작성 완료 점수";
   } else {
     teacherStatusChip.textContent = "작성 중";
-    submissionStatusNote.textContent = "필수값을 모두 채우면 제출 가능 상태로 전환됩니다.";
+    submissionStatusNote.textContent = "작성 완료 점수";
   }
 }
 
@@ -559,11 +597,11 @@ function updateLastSubmission(record) {
   const missing = [];
   if (record.status === "attendance_pending") missing.push("출석");
   if (record.status === "journal_missing") missing.push("교육일지");
-  if (record.status === "files_review") missing.push("운영자 문서 검토");
+  if (record.status === "files_review") missing.push("운영자 검토");
 
   appState.lastSubmission = {
     title: `${record.title} / ${record.date.replaceAll("-", ".")}`,
-    copy: `${record.attendance}, 첨부 문서 ${record.files.length}건`,
+    copy: `${record.attendance}, 수업자료/서류 ${record.files.length}건`,
     time: record.submittedAt.split(" ").pop(),
     status: getStatusMeta(record.status).label,
     missing: missing.length ? missing.join(", ") : "없음"
@@ -699,12 +737,34 @@ function renderOperations() {
 
   operationsNodes.statusRows.innerHTML = records
     .slice(0, 4)
-    .map((record) => {
+    .map((record, index) => {
       const meta = getStatusMeta(record.status);
+      const villageCode = `V${String(index + 12).padStart(2, "0")}`;
+      const progressMap = {
+        complete: 100,
+        journal_missing: 72,
+        attendance_pending: 36,
+        files_review: 84
+      };
+      const progressValue = progressMap[record.status] || 60;
       return `
         <div class="status-row">
-          <span>${record.village} / ${record.title}</span>
-          <strong class="${meta.className}">${meta.label}</strong>
+          <div class="status-row-main">
+            <div class="status-row-code">${villageCode}</div>
+            <div class="status-row-copy">
+              <strong>${record.title}</strong>
+              <span>${formatRecordTeacher(record)} · ${record.village}</span>
+            </div>
+          </div>
+          <div class="status-row-side">
+            <div class="status-progress">
+              <span>완성도</span>
+              <div class="status-progress-bar">
+                <div class="status-progress-fill" style="width: ${progressValue}%"></div>
+              </div>
+            </div>
+            <strong class="${meta.className}">${meta.label}</strong>
+          </div>
         </div>
       `;
     })
@@ -712,7 +772,20 @@ function renderOperations() {
 
   operationsNodes.activityLog.innerHTML = activityLog
     .slice(0, 5)
-    .map((log) => `<li><span>${log.time}</span><strong>${log.text}</strong></li>`)
+    .map((log, index) => {
+      const toneClass =
+        index === 0 ? "timeline-ok" : index === 2 ? "timeline-alert" : "timeline-neutral";
+      const icon = index === 0 ? "✓" : index === 2 ? "!" : "•";
+      return `
+        <li class="timeline-item">
+          <span class="timeline-icon ${toneClass}">${icon}</span>
+          <div class="timeline-copy">
+            <strong>${log.text}</strong>
+            <span>${log.time}</span>
+          </div>
+        </li>
+      `;
+    })
     .join("");
 
   const journalMissing = records.filter((record) => record.status === "journal_missing").length;
@@ -721,7 +794,7 @@ function renderOperations() {
 
   operationsNodes.riskSummary.innerHTML = `
     <li><span>교육일지 미제출</span><strong>${journalMissing}건</strong></li>
-    <li><span>첨부 문서 검토 대기</span><strong>${fileReview}건</strong></li>
+    <li><span>운영자 검토 대기</span><strong>${fileReview}건</strong></li>
     <li><span>출석 입력 대기</span><strong>${attendancePending}건</strong></li>
   `;
 }
@@ -764,11 +837,16 @@ function renderUsers() {
   userList.innerHTML = filteredUsers
     .map((user) => {
       const activeClass = user.id === appState.selectedUserId ? " active" : "";
+      const initials = user.name.slice(0, 2);
       return `
         <button class="data-row${activeClass}" type="button" data-user-id="${user.id}">
           <div class="data-main">
-            <strong>${user.name}</strong>
-            <span>${user.scope}</span>
+            <div class="data-avatar">${initials}</div>
+            <div class="data-copy">
+              <strong>${user.name}</strong>
+              <span>${user.scope}</span>
+              <small>${user.note}</small>
+            </div>
           </div>
           <div class="data-meta">
             <div class="tagline">${getRoleText(user.accessRole)}</div>
@@ -794,18 +872,21 @@ function renderUserDetail() {
   const actionTarget = user.accessRole === "operator" ? "teacher" : "operator";
 
   userDetail.innerHTML = `
-    <div class="detail-block">
-      <p class="detail-label">사용자</p>
-      <p class="detail-value"><strong>${user.name}</strong></p>
-      <p class="detail-text">${user.note}</p>
+    <div class="detail-hero">
+      <div class="detail-hero-badge">${user.name.slice(0, 2)}</div>
+      <div>
+        <p class="detail-label">사용자</p>
+        <p class="detail-value"><strong>${user.name}</strong></p>
+        <p class="detail-text">${user.note}</p>
+      </div>
     </div>
     <div class="detail-grid">
       <div class="detail-block">
         <p class="detail-label">현재 역할</p>
-        <p class="detail-value">${getRoleText(user.accessRole)}</p>
+        <p class="detail-value"><span class="tagline">${getRoleText(user.accessRole)}</span></p>
       </div>
       <div class="detail-block">
-        <p class="detail-label">권한 범위</p>
+      <p class="detail-label">접근 범위</p>
         <p class="detail-value">${user.scope}</p>
       </div>
     </div>
@@ -857,7 +938,7 @@ function updateUserState(action) {
         ? "전체 마을 + 권한 검토"
         : `${user.scope.split(" / ")[0]} / 복수 수업 운영`;
     user.note = "담당 범위 확장 반영";
-    user.history.unshift("담당 범위를 확장해 복수 세션을 볼 수 있게 조정");
+    user.history.unshift("접근 범위를 확장해 복수 세션을 볼 수 있게 조정");
   }
 
   if (action === "normalize-scope") {
@@ -869,8 +950,8 @@ function updateUserState(action) {
           : user.id === 3
             ? "청도읍 / 생태 관찰 수업"
             : "화양읍 / 마을 탐구 수업";
-    user.note = "기본 권한 범위 복원";
-    user.history.unshift("권한 범위를 기본 설정으로 복원");
+    user.note = "기본 접근 범위 복원";
+    user.history.unshift("접근 범위를 기본 설정으로 복원");
   }
 
   user.updatedAt = getNowTimestamp();
@@ -925,14 +1006,19 @@ function renderRecords() {
   }
 
   recordTable.innerHTML = filteredRecords
-    .map((record) => {
+    .map((record, index) => {
       const activeClass = record.id === appState.selectedRecordId ? " active" : "";
       const meta = getStatusMeta(record.status);
+      const recordCode = `${record.village.slice(0, 1)}${String(index + 1).padStart(2, "0")}`;
       return `
         <button class="record-row${activeClass}" type="button" data-record-id="${record.id}">
           <div class="record-main">
-            <strong>${record.title}</strong>
-            <span>${formatRecordTeacher(record)} · ${record.village}</span>
+            <div class="record-code">${recordCode}</div>
+            <div class="record-copy">
+              <strong>${record.title}</strong>
+              <span>${formatRecordTeacher(record)} · ${record.village}</span>
+              <small>${record.attendance}</small>
+            </div>
           </div>
           <div class="record-meta">
             <div class="tagline">${meta.label}</div>
@@ -956,14 +1042,17 @@ function renderRecordDetail() {
 
   const meta = getStatusMeta(record.status);
   const fileItems = record.files.length
-    ? record.files.map((file) => `<li><span>${file}</span><strong>첨부됨</strong></li>`).join("")
-    : `<li><span>첨부 문서 없음</span><strong>빈 상태</strong></li>`;
+    ? record.files.map((file) => `<li><span>${file}</span><strong>업로드 완료</strong></li>`).join("")
+    : `<li><span>수업자료/서류 없음</span><strong>빈 상태</strong></li>`;
 
   recordDetail.innerHTML = `
-    <div class="detail-block">
-      <p class="detail-label">수업 정보</p>
-      <p class="detail-value"><strong>${record.title}</strong></p>
-      <p class="detail-text">${formatRecordTeacher(record)} · ${record.village}</p>
+    <div class="detail-hero">
+      <div class="detail-hero-badge">${record.village.slice(0, 1)}</div>
+      <div>
+        <p class="detail-label">수업 정보</p>
+        <p class="detail-value"><strong>${record.title}</strong></p>
+        <p class="detail-text">${formatRecordTeacher(record)} · ${record.village}</p>
+      </div>
     </div>
     <div class="detail-grid">
       <div class="detail-block">
@@ -972,7 +1061,7 @@ function renderRecordDetail() {
       </div>
       <div class="detail-block">
         <p class="detail-label">상태</p>
-        <p class="detail-value">${meta.label}</p>
+        <p class="detail-value"><span class="${meta.className}">${meta.label}</span></p>
       </div>
     </div>
     <div class="detail-block">
@@ -984,7 +1073,7 @@ function renderRecordDetail() {
       <p class="detail-text">${record.journal}</p>
     </div>
     <div class="detail-block">
-      <p class="detail-label">첨부 문서</p>
+      <p class="detail-label">수업자료/서류</p>
       <ul class="summary-list">${fileItems}</ul>
     </div>
   `;
@@ -1050,7 +1139,7 @@ function renderInsights() {
         <span>세션 ${value.total}건 · 완료 ${value.complete}건</span>
       </div>
       <div class="rank-meta">
-        <strong>${value.files} files</strong>
+        <strong>문서 ${value.files}건</strong>
       </div>
     </div>
   `);
@@ -1071,7 +1160,7 @@ function renderInsights() {
     <div class="rank-row">
       <div class="rank-main">
         <strong>${label}</strong>
-        <span>세션 ${value.total}건 · 첨부 ${value.files}건</span>
+        <span>세션 ${value.total}건 · 문서 ${value.files}건</span>
       </div>
       <div class="rank-meta">
         <strong>${Math.round((value.complete / value.total) * 100)}%</strong>
@@ -1083,7 +1172,7 @@ function renderInsights() {
     <li><span>완료된 제출</span><strong>${completeCount}건</strong></li>
     <li><span>교육일지 누락</span><strong>${journalGap}건</strong></li>
     <li><span>출석 입력 대기</span><strong>${scopedRecords.filter((record) => record.status === "attendance_pending").length}건</strong></li>
-    <li><span>문서 검토 대기</span><strong>${scopedRecords.filter((record) => record.status === "files_review").length}건</strong></li>
+    <li><span>운영자 검토 대기</span><strong>${scopedRecords.filter((record) => record.status === "files_review").length}건</strong></li>
   `;
 }
 
@@ -1165,6 +1254,7 @@ function bindEvents() {
 
   document.getElementById("save-draft").addEventListener("click", handleSaveDraft);
   document.getElementById("submit-session").addEventListener("click", handleSubmitSession);
+  document.getElementById("submit-session-side").addEventListener("click", handleSubmitSession);
   document.getElementById("add-attachment").addEventListener("click", handleAttachmentAdd);
 
   fileList.addEventListener("click", (event) => {
@@ -1231,6 +1321,7 @@ function initialize() {
   renderLoginAccounts();
   renderAuthState();
   renderAttendance();
+  renderFeedbackList();
   renderFileList();
   renderTeacherSummary();
   updateLastSubmission({
@@ -1239,7 +1330,7 @@ function initialize() {
     submittedAt: "2026.04.09 17:48",
     status: "complete",
     attendance: "출석 5명, 지각 0명, 결석 0명",
-    files: ["field-guide-spring.pdf"]
+    files: ["봄_생태관찰_활동지.pdf"]
   });
   renderUsers();
   renderUserDetail();

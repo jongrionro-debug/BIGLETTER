@@ -1,31 +1,45 @@
 # Design System
 
-This document outlines the core aesthetic and functional principles of our design system.
+This mockup is re-framed around a KakaoTalk-inspired product language: bright, friendly, fast to scan, and optimized for operational use.
 
-## Brand Identity
+## Brand Direction
 
-Our brand identity is built around a "light" color mode, emphasizing clarity and accessibility.
+- Tone: approachable messenger UI combined with a lightweight operations console
+- Mood: warm neutrals, compact information blocks, clear status cues, minimal chrome
+- Core metaphor: chat bubble, channel tab, quick action tray
 
-### Colors
+## Colors
 
-Our primary color palette is directly defined, ensuring a distinctive and consistent brand presence.
-
-* **Primary Color:** `#1D9E75` - This is our most distinctive color, used for key interactive elements and calls to action.
-* **Secondary Color:** `#0F6E56` - A supporting color for less prominent UI elements and secondary actions.
-* **Tertiary Color:** `#94C7B8` - An additional accent for highlights and decorative elements.
-* **Neutral Color:** `#5F6368` - A foundational color for backgrounds, surfaces, and non-chromatic elements.
+- Primary Accent: `#FEE500`
+- Accent Surface: `#FFF3A4`
+- Accent Ink: `#1F1A17`
+- Background: `#F6F1E8`
+- Surface: `#FFFDF8`
+- Surface Alt: `#F3EBDD`
+- Border: `#E5DAC8`
+- Text Primary: `#1C1A17`
+- Text Secondary: `#6B665E`
+- Success: `#2F9E5B`
+- Warning: `#C9831A`
+- Danger: `#D95C4A`
 
 ## Typography
 
-We employ a cohesive typographic system to ensure readability and brand consistency.
+- Primary UI Font: `Pretendard Variable`
+- Fallbacks: `SUIT Variable`, `Apple SD Gothic Neo`, `Noto Sans KR`, `sans-serif`
+- Headings: bold Korean sans with tight tracking
+- Labels and controls: medium to semibold, compact line-height
 
-* **Headlines:** `plusJakartaSans` - Used for all major headings and titles, providing a strong visual hierarchy.
-* **Body Text:** `inter` - Chosen for its legibility and versatility in long-form content.
-* **Labels:** `inter` - Applied to UI labels, buttons, and other interactive text for clear communication.
+## Shape and Layout
 
-## Shape and Form
+- Corner language: generous rounding, with asymmetric "talk bubble" corners on key panels
+- Navigation: pill tabs and stacked channel-style list items
+- Workspace: bright canvas, soft separators, shallow shadows
+- Density: compact enough for operators, but never visually harsh
 
-The tactile qualities of our UI elements are defined by their roundedness and spacing.
+## Component Rules
 
-* **Roundedness:** `2` - Our UI elements feature moderate roundedness, striking a balance between modern aesthetics and approachability.
-* **Spacing:** `2` - We maintain a normal level of whitespace, providing a balanced and comfortable user experience without feeling too dense or too sparse.
+- Use yellow only for the most important active states and primary actions
+- Let white and warm neutral surfaces carry most of the UI
+- Prefer status chips and inline labels over dense card decoration
+- Keep the interface mobile-app familiar even on desktop widths
