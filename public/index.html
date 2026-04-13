@@ -103,12 +103,20 @@
 
       <nav class="nav-list">
         <button class="nav-item" data-view="teacher" data-access="teacher">
-          <span>강사 통합 기록</span>
-          <small>출석 · 교육일지 · 첨부 제출</small>
+          <span>강사 대시보드</span>
+          <small>오늘 수업 수, 출석률, 일지 완료율</small>
+        </button>
+        <button class="nav-item" data-view="students" data-access="teacher">
+          <span>학생 관리</span>
+          <small>출석 현황과 학생별 메모 확인</small>
+        </button>
+        <button class="nav-item" data-view="classes" data-access="teacher">
+          <span>수업 관리</span>
+          <small>교육일지 작성과 자료 업로드</small>
         </button>
         <button class="nav-item" data-view="operations" data-access="operator">
           <span>운영자 대시보드</span>
-          <small>오늘 제출 현황과 빠른 이동</small>
+          <small>성과 지표와 제출 로그 통합 확인</small>
         </button>
         <button class="nav-item" data-view="permissions" data-access="operator">
           <span>사용자/권한 관리</span>
@@ -117,10 +125,6 @@
         <button class="nav-item" data-view="records" data-access="operator">
           <span>서류/기록 관리</span>
           <small>출석, 교육일지, 수업자료/서류 통합 조회</small>
-        </button>
-        <button class="nav-item" data-view="insights" data-access="operator">
-          <span>통계/성과</span>
-          <small>Should Have 확장 초안</small>
         </button>
       </nav>
 
@@ -138,23 +142,9 @@
         <div class="topbar-primary">
           <div class="topbar-brandline">
             <strong>두레 하모니</strong>
-            <nav class="topbar-links" aria-label="전역 메뉴">
-              <a href="#" onclick="return false;">대시보드</a>
-              <a href="#" onclick="return false;">클래스룸</a>
-              <a href="#" onclick="return false;">보고서</a>
-              <a href="#" onclick="return false;">주소록</a>
-            </nav>
-          </div>
-          <div class="topbar-titleblock">
-            <p class="eyebrow" id="view-kicker">강사 탭</p>
-            <h2 id="view-title">오늘 수업 통합 기록</h2>
           </div>
         </div>
         <div class="topbar-meta">
-          <label class="topbar-search">
-            <span>검색</span>
-            <input type="search" placeholder="데이터 검색...">
-          </label>
           <div class="meta-chip">
             <span class="meta-label">현재 역할</span>
             <strong id="role-access-chip">강사</strong>
@@ -163,85 +153,112 @@
             <span class="meta-label">현재 사용자</span>
             <strong id="current-user-chip">-</strong>
           </div>
-          <div class="meta-chip meta-chip-compact"><strong id="live-clock">--:--</strong></div>
         </div>
       </header>
 
       <section class="view" data-view-panel="teacher">
-        <div class="hero-strip">
+        <div class="dashboard-intro teacher-dashboard-intro">
           <div>
             <p class="eyebrow">강사 탭</p>
-            <h3>한 번의 제출로 오늘 수업을 마감합니다.</h3>
-            <p class="section-copy">전자 출석부, 교육일지, 수업자료 업로드를 하나의 흐름으로 묶어 현장 입력 부담을 줄였습니다.</p>
+            <h3>강사 대시보드</h3>
+            <p class="section-copy">대시보드에서는 오늘 업무의 완성도를 보여주는 핵심 지표만 확인합니다. 실제 입력과 제출은 학생 관리와 수업 관리 화면으로 분리했습니다.</p>
           </div>
           <div class="hero-actions">
-            <span class="hero-status" id="teacher-status-chip">작성 중</span>
-            <button class="btn btn-secondary" type="button" id="save-draft">임시 저장</button>
-            <button class="btn btn-primary" type="button" id="submit-session">오늘 기록 제출</button>
+            <button class="btn btn-secondary" type="button" data-goto="students">학생 관리 열기</button>
+            <button class="btn btn-primary" type="button" data-goto="classes">수업 관리 열기</button>
           </div>
         </div>
 
-        <div class="panel-alert" id="teacher-alert" hidden></div>
+        <div class="teacher-overview-grid">
+          <div class="teacher-metric-stack">
+            <section class="teacher-stat-card teacher-stat-card-primary">
+              <span class="teacher-stat-icon">일정</span>
+              <strong class="teacher-stat-value" id="teacher-today-count">0</strong>
+              <span class="teacher-stat-label">오늘 수업</span>
+            </section>
+            <section class="teacher-stat-card teacher-stat-card-accent">
+              <span class="teacher-stat-icon">출석</span>
+              <strong class="teacher-stat-value" id="teacher-attendance-rate">0%</strong>
+              <span class="teacher-stat-label">출석률</span>
+            </section>
+            <section class="teacher-stat-card teacher-stat-card-soft">
+              <span class="teacher-stat-icon">일지</span>
+              <strong class="teacher-stat-value" id="teacher-journal-rate">0%</strong>
+              <span class="teacher-stat-label">일지 완료율</span>
+            </section>
+          </div>
 
-        <div class="teacher-grid">
-          <section class="panel teacher-context-panel">
-            <div class="panel-head">
+          <section class="panel teacher-schedule-panel">
+            <div class="panel-head teacher-schedule-head">
               <div>
-                <p class="panel-kicker">Session Setup</p>
-                <h4>수업 컨텍스트</h4>
+                <p class="panel-kicker">Today Schedule</p>
+                <h4>예정된 수업 일정</h4>
               </div>
-              <span class="panel-status">필수 입력</span>
+              <span class="teacher-schedule-date" id="teacher-schedule-date">2026년 4월 10일</span>
             </div>
-            <div class="field-grid">
-              <label class="field">
-                <span>날짜</span>
-                <input id="session-date" type="date" value="2026-04-10">
-              </label>
-              <label class="field">
-                <span>마을</span>
-                <select id="session-village">
-                  <option>다로리마을</option>
-                  <option>화양읍</option>
-                  <option>청도읍</option>
-                  <option>각남면</option>
-                </select>
-              </label>
-              <label class="field field-wide">
-                <span>수업</span>
-                <select id="session-class">
-                  <option>목공 메이커 수업 / 15:00</option>
-                  <option>생태 관찰 수업 / 16:30</option>
-                  <option>마을 탐구 수업 / 17:00</option>
-                </select>
-              </label>
-            </div>
-          </section>
-
-          <section class="panel teacher-prep-panel">
-            <div class="panel-head">
-              <div>
-                <p class="panel-kicker">Submission Summary</p>
-                <h4>제출 준비도</h4>
-              </div>
-            </div>
-            <div class="prep-ring" id="prep-fill">
-              <div class="prep-ring-inner">
-                <strong id="prep-value">82%</strong>
-                <span>준비됨</span>
-              </div>
-            </div>
-            <p class="prep-ring-caption" id="submission-status-note">작성 완료 점수</p>
-            <ul class="prep-checklist">
-              <li id="prep-step-context"><span class="prep-step-icon"></span><span id="context-summary">날짜/마을/수업 선택 대기</span></li>
-              <li id="prep-step-attendance"><span class="prep-step-icon"></span><span id="attendance-summary">전자 출석부 입력 대기</span></li>
-              <li id="prep-step-journal"><span class="prep-step-icon"></span><span id="journal-summary">교육일지 작성 대기</span></li>
-              <li id="prep-step-files"><span class="prep-step-icon"></span><span id="file-summary">수업자료/서류 업로드 대기</span></li>
-            </ul>
-            <button class="btn btn-primary btn-block" type="button" id="submit-session-side">제출하기</button>
+            <div class="teacher-schedule-list" id="teacher-schedule-list"></div>
           </section>
         </div>
 
-        <div class="teacher-workspace">
+        <div class="teacher-secondary-grid">
+          <section class="panel teacher-last-panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Latest Submission</p>
+                <h4>최근 제출 일지</h4>
+              </div>
+              <span class="teacher-grade-chip">최근 제출</span>
+            </div>
+            <div class="teacher-last-body">
+              <div>
+                <p class="teacher-last-label">작성 대상</p>
+                <strong id="last-submission-title">생태 관찰 수업 / 2026.04.09</strong>
+                <p id="last-submission-copy">출석 5명, 교육일지 제출 완료, 수업자료/서류 1건</p>
+              </div>
+              <div class="teacher-grade-panel">
+                <span id="last-submission-status">운영자 검토 대기</span>
+                <strong id="teacher-grade-value">A+</strong>
+              </div>
+            </div>
+            <ul class="history-list teacher-last-meta">
+              <li><span>제출 시각</span><strong id="last-submission-time">17:48</strong></li>
+              <li><span>누락 항목</span><strong id="last-submission-missing">없음</strong></li>
+            </ul>
+          </section>
+
+          <div class="teacher-shortcut-grid">
+            <button class="panel teacher-shortcut-card teacher-shortcut-button" type="button" data-goto="students">
+              <div class="teacher-shortcut-icon">학생</div>
+              <div class="teacher-shortcut-copy">
+                <h4>학생 관리</h4>
+                <p>대시보드에서 분리된 출석부 업무를 학생 관리 화면에서 집중해서 처리합니다.</p>
+              </div>
+            </button>
+            <button class="panel teacher-shortcut-card teacher-shortcut-card-highlight teacher-shortcut-button" type="button" data-goto="classes">
+              <div class="teacher-shortcut-icon">수업</div>
+              <div class="teacher-shortcut-copy">
+                <h4>수업 관리</h4>
+                <p>교육일지 작성, 파일 업로드, 제출 준비도 확인을 수업 관리 화면으로 옮겼습니다.</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-view-panel="students">
+        <div class="dashboard-intro">
+          <div>
+            <p class="eyebrow">학생 관리</p>
+            <h3>학생 관리</h3>
+            <p class="section-copy">출석부 입력과 학생별 메모 초안을 한곳에 모아, 강사 대시보드에서 분리된 학생 중심 업무만 집중해서 볼 수 있게 했습니다.</p>
+          </div>
+          <div class="hero-actions">
+            <button class="btn btn-secondary" type="button" data-goto="teacher">대시보드로 돌아가기</button>
+            <button class="btn btn-primary" type="button" data-goto="classes">수업 관리로 이동</button>
+          </div>
+        </div>
+
+        <div class="teacher-composer-grid">
           <div class="teacher-main-column">
             <section class="panel teacher-attendance-panel">
               <div class="panel-head">
@@ -253,170 +270,231 @@
               </div>
               <div class="attendance-list" id="attendance-list"></div>
             </section>
-
-            <section class="panel teacher-journal-panel">
-              <div class="panel-head">
-                <div>
-                  <p class="panel-kicker">Journal</p>
-                  <h4>교육일지</h4>
-                </div>
-                <span class="panel-status">제출 필수</span>
-              </div>
-              <div class="field-stack">
-                <label class="field">
-                  <span>오늘 수업 요약</span>
-                  <textarea id="journal-summary-input" rows="5">목공 메이커 수업에서 새집 프레임 조립을 진행했습니다. 초반 설명 후 개별 제작으로 넘어갔고, 대부분 망치 사용에 빠르게 적응했습니다.</textarea>
-                </label>
-                <label class="field">
-                  <span>운영 메모</span>
-                  <textarea id="journal-note-input" rows="4">재료 소진이 빠른 편이라 다음 회차 전 목재 키트 추가 확보가 필요합니다. 공구 정리 시간은 10분 확보가 적절했습니다.</textarea>
-                </label>
-              </div>
-            </section>
-
-            <section class="panel teacher-files-panel">
-              <div class="panel-head">
-                <div>
-                  <p class="panel-kicker">Attachments</p>
-                  <h4>수업자료 · 서류 업로드</h4>
-                </div>
-                <span class="panel-caption">목업에서는 샘플 파일이 순차적으로 추가됩니다.</span>
-              </div>
-              <div class="upload-dropzone">
-                <p id="upload-hint">파일을 드래그하거나 업로드 버튼으로 첨부합니다.</p>
-                <button class="btn btn-secondary" type="button" id="add-attachment">파일 선택</button>
-              </div>
-              <ul class="file-list file-list-interactive" id="file-list"></ul>
-            </section>
           </div>
 
           <aside class="teacher-side-column">
-            <section class="panel teacher-history-panel">
-              <div class="panel-head">
-                <div>
-                  <p class="panel-kicker">Last Submission</p>
-                  <h4>최근 제출 이력</h4>
-                </div>
-              </div>
-              <div class="history-callout">
-                <strong id="last-submission-title">생태 관찰 수업 / 2026.04.09</strong>
-                <p id="last-submission-copy">출석 5명, 교육일지 제출 완료, 수업자료/서류 1건</p>
-              </div>
-              <ul class="history-list">
-                <li><span>제출 시각</span><strong id="last-submission-time">17:48</strong></li>
-                <li><span>검토 상태</span><strong id="last-submission-status">운영자 검토 대기</strong></li>
-                <li><span>누락 항목</span><strong id="last-submission-missing">없음</strong></li>
-              </ul>
-            </section>
-
             <section class="panel teacher-feedback-panel">
               <div class="panel-head">
                 <div>
-                  <p class="panel-kicker">Could Have</p>
+                  <p class="panel-kicker">Student Notes</p>
                   <h4>학생별 개별 메모 초안</h4>
                 </div>
                 <span class="panel-caption">2차 범위 검토용</span>
               </div>
               <div id="feedback-list" class="feedback-list"></div>
             </section>
+
+            <section class="panel teacher-prep-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="panel-kicker">Student Workspace</p>
+                  <h4>학생 관리 안내</h4>
+                </div>
+              </div>
+              <p class="section-copy">출석 입력은 이 화면에서 처리하고, 교육일지 작성과 첨부 제출은 수업 관리 화면으로 이동해 이어서 마감합니다.</p>
+              <button class="btn btn-primary btn-block" type="button" data-goto="classes">수업 관리로 이동</button>
+            </section>
           </aside>
         </div>
       </section>
 
+      <section class="view" data-view-panel="classes">
+        <div class="panel-alert" id="teacher-alert" hidden></div>
+        <section class="teacher-composer-shell">
+          <div class="teacher-composer-head">
+            <div>
+              <p class="eyebrow">수업 관리</p>
+              <h3>수업 관리</h3>
+              <p class="section-copy">대시보드에서 분리한 교육일지 작성과 자료 업로드, 제출 준비도를 이 화면에서 집중적으로 다룹니다.</p>
+            </div>
+            <div class="hero-actions">
+              <span class="hero-status" id="teacher-status-chip">작성 중</span>
+              <button class="btn btn-secondary" type="button" id="save-draft">임시 저장</button>
+              <button class="btn btn-primary" type="button" id="submit-session">오늘 기록 제출</button>
+            </div>
+          </div>
+
+          <div class="teacher-composer-grid">
+            <div class="teacher-main-column">
+              <section class="panel teacher-context-panel">
+                <div class="panel-head">
+                  <div>
+                    <p class="panel-kicker">Session Setup</p>
+                    <h4>수업 컨텍스트</h4>
+                  </div>
+                  <span class="panel-status">필수 입력</span>
+                </div>
+                <div class="field-grid">
+                  <label class="field">
+                    <span>날짜</span>
+                    <input id="session-date" type="date" value="2026-04-10">
+                  </label>
+                  <label class="field">
+                    <span>마을</span>
+                    <select id="session-village">
+                      <option>다로리마을</option>
+                      <option>화양읍</option>
+                      <option>청도읍</option>
+                      <option>각남면</option>
+                    </select>
+                  </label>
+                  <label class="field field-wide">
+                    <span>수업</span>
+                    <select id="session-class">
+                      <option>목공 메이커 수업 / 15:00</option>
+                      <option>생태 관찰 수업 / 16:30</option>
+                      <option>마을 탐구 수업 / 17:00</option>
+                    </select>
+                  </label>
+                </div>
+              </section>
+              <section class="panel teacher-journal-panel">
+                <div class="panel-head">
+                  <div>
+                    <p class="panel-kicker">Journal</p>
+                    <h4>교육일지</h4>
+                  </div>
+                  <span class="panel-status">제출 필수</span>
+                </div>
+                <div class="field-stack">
+                  <label class="field">
+                    <span>오늘 수업 요약</span>
+                    <textarea id="journal-summary-input" rows="5">목공 메이커 수업에서 새집 프레임 조립을 진행했습니다. 초반 설명 후 개별 제작으로 넘어갔고, 대부분 망치 사용에 빠르게 적응했습니다.</textarea>
+                  </label>
+                  <label class="field">
+                    <span>운영 메모</span>
+                    <textarea id="journal-note-input" rows="4">재료 소진이 빠른 편이라 다음 회차 전 목재 키트 추가 확보가 필요합니다. 공구 정리 시간은 10분 확보가 적절했습니다.</textarea>
+                  </label>
+                </div>
+              </section>
+            </div>
+
+            <aside class="teacher-side-column">
+              <section class="panel teacher-prep-panel">
+                <div class="panel-head">
+                  <div>
+                    <p class="panel-kicker">Submission Summary</p>
+                    <h4>제출 준비도</h4>
+                  </div>
+                </div>
+                <div class="prep-ring" id="prep-fill">
+                  <div class="prep-ring-inner">
+                    <strong id="prep-value">82%</strong>
+                    <span>준비됨</span>
+                  </div>
+                </div>
+                <p class="prep-ring-caption" id="submission-status-note">작성 완료 점수</p>
+                <ul class="prep-checklist">
+                  <li id="prep-step-context"><span class="prep-step-icon"></span><span id="context-summary">날짜/마을/수업 선택 대기</span></li>
+                  <li id="prep-step-attendance"><span class="prep-step-icon"></span><span id="attendance-summary">전자 출석부 입력 대기</span></li>
+                  <li id="prep-step-journal"><span class="prep-step-icon"></span><span id="journal-summary">교육일지 작성 대기</span></li>
+                  <li id="prep-step-files"><span class="prep-step-icon"></span><span id="file-summary">수업자료/서류 업로드 대기</span></li>
+                </ul>
+                <button class="btn btn-primary btn-block" type="button" id="submit-session-side">제출하기</button>
+              </section>
+
+              <section class="panel teacher-files-panel">
+                <div class="panel-head">
+                  <div>
+                    <p class="panel-kicker">Attachments</p>
+                    <h4>수업자료 · 서류 업로드</h4>
+                  </div>
+                  <span class="panel-caption">목업에서는 샘플 파일이 순차적으로 추가됩니다.</span>
+                </div>
+                <div class="upload-dropzone">
+                  <p id="upload-hint">파일을 드래그하거나 업로드 버튼으로 첨부합니다.</p>
+                  <button class="btn btn-secondary" type="button" id="add-attachment">파일 선택</button>
+                </div>
+                <ul class="file-list file-list-interactive" id="file-list"></ul>
+              </section>
+            </aside>
+          </div>
+        </section>
+      </section>
+
       <section class="view" data-view-panel="operations">
-        <div class="ops-hero">
-          <div class="ops-hero-copy">
-            <p class="ops-breadcrumb">두레 하모니 &gt; 운영자 대시보드</p>
+        <div class="dashboard-intro operations-dashboard-intro">
+          <div>
+            <p class="eyebrow">운영 채널</p>
             <h3>운영자 대시보드</h3>
-            <p class="section-copy">시스템 상태와 오늘 제출 흐름을 한 화면에서 빠르게 파악합니다.</p>
+            <p class="section-copy">모든 마을의 실시간 성과 지표와 제출 로그를 한 번에 확인하고, 필요한 화면으로 바로 이어집니다.</p>
           </div>
           <div class="hero-actions">
-            <button class="btn btn-secondary" type="button">보고서 내보내기</button>
-            <button class="btn btn-primary" type="button">데이터 새로고침</button>
+            <button class="btn btn-secondary" type="button">리포트 다운로드</button>
+            <button class="btn btn-primary" type="button">+ 신규 과제 등록</button>
           </div>
         </div>
 
-        <div class="stats-grid">
-          <section class="metric-panel metric-panel-green">
-            <div class="metric-head">
-              <span class="metric-icon">✓</span>
-              <span class="metric-tag">+12%</span>
+        <div class="ops-metric-grid">
+          <section class="ops-metric-card">
+            <p class="ops-metric-kicker">전체 세션</p>
+            <div class="ops-metric-row">
+              <strong class="ops-metric-value" id="ops-total-sessions">0</strong>
+              <span class="ops-metric-trend">라이브</span>
             </div>
-            <strong class="metric-value" id="ops-completed-count">0</strong>
-            <span class="metric-note">제출 완료</span>
+            <p class="ops-metric-copy">현재 조회 중인 수업 세션 수</p>
           </section>
-          <section class="metric-panel metric-panel-yellow">
-            <div class="metric-head">
-              <span class="metric-icon">••</span>
-              <span class="metric-tag">진행 중</span>
+          <section class="ops-metric-card ops-metric-card-accent">
+            <p class="ops-metric-kicker">제출 완료율</p>
+            <div class="ops-metric-row">
+              <strong class="ops-metric-value" id="ops-completion-rate">0%</strong>
+              <span class="ops-metric-trend">실시간</span>
             </div>
-            <strong class="metric-value" id="ops-pending-count">0</strong>
-            <span class="metric-note">제출 대기</span>
+            <p class="ops-metric-copy">출석, 일지, 첨부를 모두 마친 비율</p>
           </section>
-          <section class="metric-panel metric-panel-cream">
-            <div class="metric-head">
-              <span class="metric-icon">□</span>
-              <span class="metric-tag">전체</span>
+          <section class="ops-metric-card">
+            <p class="ops-metric-kicker">누적 문서 수</p>
+            <div class="ops-metric-row">
+              <strong class="ops-metric-value" id="ops-file-total">0</strong>
+              <span class="ops-metric-trend">파일</span>
             </div>
-            <strong class="metric-value" id="ops-files-count">0</strong>
-            <span class="metric-note">누적 문서</span>
-          </section>
-          <section class="metric-panel metric-panel-alert">
-            <div class="metric-head">
-              <span class="metric-icon">!</span>
-              <span class="metric-tag">조치 필요</span>
-            </div>
-            <strong class="metric-value" id="ops-review-count">0</strong>
-            <span class="metric-note">검토 필요</span>
+            <p class="ops-metric-copy">수업자료 및 운영 서류 누적 건수</p>
           </section>
         </div>
 
-        <div class="dashboard-grid dashboard-grid-ops">
-          <section class="panel panel-ops-status">
+        <div class="ops-overview-grid">
+          <section class="panel ops-village-panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Village Status</p>
+                <h4>마을별 현황</h4>
+              </div>
+            </div>
+            <div class="ops-village-board" id="ops-village-board"></div>
+          </section>
+
+          <section class="panel ops-leader-panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Top Teachers</p>
+                <h4>우수 강사 현황</h4>
+              </div>
+              <button class="panel-inline-link" type="button" data-goto="permissions">전체 보기</button>
+            </div>
+            <div class="ops-leader-board" id="ops-leader-board"></div>
+          </section>
+        </div>
+
+        <div class="ops-detail-grid">
+          <section class="panel ops-submission-panel">
             <div class="panel-head">
               <div>
                 <p class="panel-kicker">Submission Status</p>
-                <h4>오늘 제출 현황</h4>
+                <h4>오늘의 제출 현황</h4>
               </div>
-              <button class="panel-inline-link" type="button">전체 보기</button>
+              <span class="ops-table-chip">진행 중</span>
             </div>
-            <div class="status-rows" id="status-rows"></div>
+            <div class="ops-submission-table" id="ops-submission-table"></div>
           </section>
 
-          <section class="panel panel-ops-activity">
+          <section class="panel ops-activity-panel">
             <div class="panel-head">
               <div>
                 <p class="panel-kicker">Recent Activity</p>
                 <h4>최근 활동 기록</h4>
               </div>
             </div>
-            <ul class="timeline-list" id="activity-log"></ul>
-          </section>
-        </div>
-
-        <div class="dashboard-grid">
-          <section class="panel">
-            <div class="panel-head">
-              <div>
-                <p class="panel-kicker">Quick Links</p>
-                <h4>빠른 이동</h4>
-              </div>
-            </div>
-            <div class="quick-grid">
-              <button class="quick-link" type="button" data-goto="permissions">사용자/권한 관리</button>
-              <button class="quick-link" type="button" data-goto="records">서류/기록 관리</button>
-              <button class="quick-link" type="button" data-goto="insights">통계/성과 초안</button>
-            </div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-head">
-              <div>
-                <p class="panel-kicker">Operational Risk</p>
-                <h4>오늘 확인할 항목</h4>
-              </div>
-            </div>
-            <ul class="summary-list" id="risk-summary"></ul>
+            <ul class="timeline-list ops-activity-list" id="activity-log"></ul>
           </section>
         </div>
       </section>

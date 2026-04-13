@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#716600",
+                    "on-secondary-fixed": "#201c00",
+                    "on-secondary-fixed-variant": "#504700",
+                    "surface-container": "#f2ede4",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e7e2d9",
+                    "tertiary-container": "#00fdfc",
+                    "on-primary-fixed-variant": "#504700",
+                    "on-tertiary-fixed-variant": "#00504f",
+                    "surface-tint": "#6a5f00",
+                    "surface-container-high": "#ece8df",
+                    "on-background": "#1d1c16",
+                    "primary-fixed-dim": "#dec800",
+                    "surface-container-low": "#f8f3ea",
+                    "on-secondary-container": "#6e6316",
+                    "on-surface-variant": "#4b4732",
+                    "tertiary-fixed": "#00fcfb",
+                    "error": "#ba1a1a",
+                    "tertiary": "#006a69",
+                    "primary": "#6a5f00",
+                    "surface-container-highest": "#e7e2d9",
+                    "secondary-fixed-dim": "#d6c871",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#cdc7aa",
+                    "outline": "#7c775f",
+                    "surface-dim": "#ded9d1",
+                    "error-container": "#ffdad6",
+                    "background": "#fef9f0",
+                    "primary-container": "#fee500",
+                    "on-surface": "#1d1c16",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#007171",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#00dddc",
+                    "surface": "#fef9f0",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#f5f0e7",
+                    "secondary": "#695f11",
+                    "surface-bright": "#fef9f0",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#dec800",
+                    "on-primary-fixed": "#201c00",
+                    "on-tertiary-fixed": "#002020",
+                    "primary-fixed": "#fde400",
+                    "secondary-fixed": "#f3e48a",
+                    "inverse-surface": "#32302b",
+                    "secondary-container": "#f0e187"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-header { backdrop-filter: blur(20px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased">
+<!-- SideNavBar -->
+<aside class="h-screen w-72 flex-col fixed left-0 top-0 bg-[#f2ede4] dark:bg-stone-900 flex p-6 gap-2 font-['Plus_Jakarta_Sans'] antialiased text-sm font-medium tracking-tight">
+<div class="flex items-center gap-3 mb-10 px-2">
+<div class="w-10 h-10 bg-primary-container rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">music_note</span>
+</div>
+<div>
+<h1 class="text-2xl font-bold tracking-tighter text-[#1d1c16] dark:text-[#fef9f0]">두레하모니</h1>
+<p class="text-xs text-on-surface-variant opacity-70">커뮤니티 운영지원</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 rounded-full transition-all duration-200 hover:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>강사 대시보드</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 rounded-full transition-all duration-200 hover:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>학생 관리</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 rounded-full transition-all duration-200 hover:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span>수업 관리</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-[#fee500] text-[#1d1c16] rounded-full font-bold scale-[0.98] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings_applications">settings_applications</span>
+<span>운영자 대시보드</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 rounded-full transition-all duration-200 hover:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+<span>사용자 관리</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 rounded-full transition-all duration-200 hover:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+<span>기록 보관함</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 rounded-full transition-all duration-200 hover:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span>통계/성과</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-outline-variant/10">
+<div class="bg-surface-container-high p-4 rounded-xl flex items-center gap-3">
+<img alt="운영진 프로필" class="w-10 h-10 rounded-full object-cover" data-alt="Professional headshot of an operations manager in a bright office setting with warm natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQKzWJkkc02Xl82rEwhHzNPHmEs5SuZ7q2uOlkHFUhdsqX_gT-fIjQKW8LvqT55fK1rkT1TV0Ha6MycL-iLJyR-d3vJjl6obEPT_JeoxkUycSqVLQcPCAt7iWxwu5i9EfuAvGGl6QEI41gOBr3EnMR-Sk3PFk4thmjkdqYQ-ygH82s6kITImBxieOjiioCkDfDA_o5nSKz1BhAu-8s0sB2aBYl5wMOAOVGKqPjhbKhORoVmKi_tXdkuqNIFET2JCflwPBZA6-4Ag4"/>
+<div class="overflow-hidden">
+<p class="text-xs font-bold truncate">관리자</p>
+<p class="text-[10px] text-on-surface-variant truncate">총괄 코디네이터</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-72 min-h-screen transition-all duration-300">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-18rem)] h-16 bg-[#fef9f0]/80 dark:bg-stone-950/80 backdrop-blur-xl flex justify-between items-center px-8 z-40 font-['Plus_Jakarta_Sans'] font-semibold shadow-sm dark:shadow-none">
+<div class="flex items-center gap-4 bg-surface-container-low px-4 py-2 rounded-full w-96 transition-all duration-300">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full" placeholder="수업, 마을 또는 강사 검색..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center text-[#4b4732] hover:bg-[#f2ede4] dark:hover:bg-stone-800 rounded-full transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-[#4b4732] hover:bg-[#f2ede4] dark:hover:bg-stone-800 rounded-full transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/30 mx-2"></div>
+<span class="text-sm font-bold text-[#1d1c16]">운영 지원 센터</span>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="pt-24 px-8 pb-12 space-y-8 max-w-[1400px] mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-3xl font-black tracking-tight text-[#1d1c16]">운영자 대시보드</h2>
+<p class="text-on-surface-variant mt-1">모든 마을의 실시간 성과 지표 및 제출 로그를 확인합니다.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 bg-surface-container-high rounded-full font-bold text-sm flex items-center gap-2 hover:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined text-sm">download</span> 리포트 다운로드
+                </button>
+<button class="px-6 py-2.5 bg-primary-container text-on-primary-container rounded-full font-bold text-sm flex items-center gap-2 hover:scale-[0.98] transition-transform shadow-lg shadow-primary-container/20">
+<span class="material-symbols-outlined text-sm">add</span> 신규 과제 등록
+                </button>
+</div>
+</div>
+<!-- Bento Grid High-Level Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-low p-8 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+</div>
+<p class="text-on-surface-variant font-bold text-sm uppercase tracking-widest">전체 세션</p>
+<div class="mt-4 flex items-baseline gap-2">
+<h3 class="text-5xl font-black text-primary">1,284</h3>
+<span class="text-tertiary font-bold text-sm flex items-center">+12% <span class="material-symbols-outlined text-sm">trending_up</span></span>
+</div>
+<p class="text-xs text-on-surface-variant mt-2">이번 분기 예정된 활성 세션</p>
+</div>
+<div class="bg-tertiary/5 p-8 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-on-tertiary-container font-bold text-sm uppercase tracking-widest">제출 완료율</p>
+<div class="mt-4 flex items-baseline gap-2">
+<h3 class="text-5xl font-black text-tertiary">94.2%</h3>
+<span class="text-tertiary font-bold text-sm flex items-center">+2.1% <span class="material-symbols-outlined text-sm">trending_up</span></span>
+</div>
+<p class="text-xs text-on-surface-variant mt-2">마감일 대비 제출 준수율</p>
+</div>
+<div class="bg-surface-container-high p-8 rounded-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">description</span>
+</div>
+<p class="text-on-surface-variant font-bold text-sm uppercase tracking-widest">누적 문서 수</p>
+<div class="mt-4 flex items-baseline gap-2">
+<h3 class="text-5xl font-black text-on-background">4,812</h3>
+<span class="text-on-surface-variant font-bold text-sm">파일 보관 중</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-2">미디어, 수업 계획안 및 학생 기록물</p>
+</div>
+</div>
+<!-- Merged Insights: Detailed Performance -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Performance By Village -->
+<div class="bg-surface-container-lowest p-8 rounded-xl">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h4 class="text-xl font-black text-[#1d1c16]">마을별 현황</h4>
+<p class="text-sm text-on-surface-variant">지역별 세션 참여도 점수</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">more_vert</span>
+</div>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-bold">
+<span>청주 마을</span>
+<span class="text-tertiary">98/100</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 98%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-bold">
+<span>광주 허브</span>
+<span class="text-tertiary">85/100</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-bold">
+<span>세종 센터</span>
+<span class="text-primary-container bg-on-primary-container/10 px-2 rounded">62/100</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 62%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-bold">
+<span>인천 서부</span>
+<span class="text-tertiary">92/100</span>
+</div>
+<div class="h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 92%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Teacher Contribution -->
+<div class="bg-surface-container-lowest p-8 rounded-xl overflow-hidden">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h4 class="text-xl font-black text-[#1d1c16]">우수 강사 현황</h4>
+<p class="text-sm text-on-surface-variant">세션 진행 실적 우수자</p>
+</div>
+<button class="text-primary font-bold text-sm">전체 보기</button>
+</div>
+<div class="divide-y divide-outline-variant/10">
+<div class="py-4 flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container overflow-hidden">
+<img alt="강사 프로필" class="w-full h-full object-cover" data-alt="Close-up portrait of a female teacher in a sunny creative studio setting with soft bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCJ0-Yh0LOZYJWihnSVtiA8_EeKLU8PTvk2flOXOlxbWa-5puWfusCmkRhxfv3pPad-_fVJc2reNxXfonqgLuoENggf1w6NRXR2k83m8kgb7D7nZasMHCIgSm0cnw2FozILs8_xB2-O24yOwastNd2UhNK12802hbQDbSzSfXNuDfYnO27xkRu04ZDY-9z9oqsbArx5iOa9u9QrFw_JMDI3OJTw5K5XiV6ocP0LHVmK06P6Qr94wdnYe6kYe49tMNRR6VBQEu4S-w"/>
+</div>
+<div>
+<p class="font-bold">김소연</p>
+<p class="text-xs text-on-surface-variant">42 세션 • 100% 정시 제출</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-black text-tertiary">플래티넘</p>
+<p class="text-[10px] text-on-surface-variant">등급</p>
+</div>
+</div>
+<div class="py-4 flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container overflow-hidden">
+<img alt="강사 프로필" class="w-full h-full object-cover" data-alt="Portrait of a male instructor wearing casual linen shirt standing in a minimalist modern library" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxuSP0TZ8luwSsxTtPinVoLEHwsc3CzLD6knRhpbIU-ip9pq5Gzu4ir3oZy4avhV1LBqird4HJdWEsO5lJWaZ9zRnYG2QIiKFJXE9W4X-bZzELnKposiQE-YpBGh6Hr0RIiLD5ijnJP4zhWUdjuXxhILCBWbZ_oZx5gkHmRFYsiwpBVaoBNDDCS0gQD3nhUs-KbWA755qqebFLHmX50fYotw0OK7BmiW9nJ5Rm-X7P21IxPKo_b-lNfgfKCCBgv_6jvLvYTBozgug"/>
+</div>
+<div>
+<p class="font-bold">이준호</p>
+<p class="text-xs text-on-surface-variant">38 세션 • 95% 정시 제출</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-black text-tertiary">골드</p>
+<p class="text-[10px] text-on-surface-variant">등급</p>
+</div>
+</div>
+<div class="py-4 flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container overflow-hidden">
+<img alt="강사 프로필" class="w-full h-full object-cover" data-alt="Professional headshot of a smiling woman in business casual attire with natural lighting and neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcru5UDcIOPb_Yg1IAr0xtNwYeInWRrlRt8rKC8I1g0s8eLSc33ZGSisPYJ5CHUsCl7hGHAYeHcuXOmT-8LSS8hamTrlevovS2-fJFBeX-R0adfUJAT7sOdCq8vbYmp-6u8x6TQka1cN_ldotIe-t_AzNluIlc-vJin_XnAJu05LaNJUARofGlH8vqLp3kOUksTp2Zw19mFhs3PrghX0hzQQ_xCG6a5zZDe77vpuKgFkorMXZ6zpfkWsFnO0CFGcd-CIt-9porRwM"/>
+</div>
+<div>
+<p class="font-bold">박지민</p>
+<p class="text-xs text-on-surface-variant">35 세션 • 92% 정시 제출</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-black text-on-surface-variant">실버</p>
+<p class="text-[10px] text-on-surface-variant">등급</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Lower Section: Submissions & Activity -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Today's Submission Status -->
+<div class="lg:col-span-2 bg-surface-container-low rounded-xl overflow-hidden">
+<div class="p-8 border-b border-outline-variant/10 flex justify-between items-center">
+<h4 class="text-xl font-black text-[#1d1c16]">오늘의 제출 현황</h4>
+<div class="flex gap-2">
+<span class="bg-tertiary-container text-on-tertiary-container text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">진행 중</span>
+</div>
+</div>
+<div class="overflow-x-auto no-scrollbar">
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] font-black text-on-surface-variant/60 uppercase tracking-widest">
+<th class="px-8 py-4">마을</th>
+<th class="px-8 py-4">강사</th>
+<th class="px-8 py-4">상태</th>
+<th class="px-8 py-4">파일</th>
+<th class="px-8 py-4 text-right">작업</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="group hover:bg-white/40 transition-colors">
+<td class="px-8 py-5 text-sm font-bold">청주 마을</td>
+<td class="px-8 py-5 text-sm">김소연</td>
+<td class="px-8 py-5">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold">완료</span>
+</td>
+<td class="px-8 py-5 text-sm">4개 파일</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-primary hover:scale-110 transition-transform">visibility</button>
+</td>
+</tr>
+<tr class="group hover:bg-white/40 transition-colors">
+<td class="px-8 py-5 text-sm font-bold">광주 허브</td>
+<td class="px-8 py-5 text-sm">이준호</td>
+<td class="px-8 py-5">
+<span class="px-3 py-1 rounded-full bg-primary-container/30 text-on-primary-container text-xs font-bold">대기</span>
+</td>
+<td class="px-8 py-5 text-sm">0개 파일</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-primary hover:scale-110 transition-transform">mail</button>
+</td>
+</tr>
+<tr class="group hover:bg-white/40 transition-colors">
+<td class="px-8 py-5 text-sm font-bold">인천 서부</td>
+<td class="px-8 py-5 text-sm">박지민</td>
+<td class="px-8 py-5">
+<span class="px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold">완료</span>
+</td>
+<td class="px-8 py-5 text-sm">12개 파일</td>
+<td class="px-8 py-5 text-right">
+<button class="material-symbols-outlined text-primary hover:scale-110 transition-transform">visibility</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Recent Activity Log -->
+<div class="bg-surface-container-high p-8 rounded-xl">
+<h4 class="text-xl font-black text-[#1d1c16] mb-6">최근 활동 기록</h4>
+<div class="space-y-6 relative">
+<div class="absolute left-4 top-2 bottom-2 w-0.5 bg-outline-variant/30"></div>
+<div class="relative pl-10">
+<div class="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-primary ring-4 ring-surface-container-high"></div>
+<p class="text-xs font-bold text-primary">오전 10:45</p>
+<p class="text-sm font-bold">리포트 승인됨</p>
+<p class="text-xs text-on-surface-variant">청주 마을 주간 수업 계획안이 관리자에 의해 승인되었습니다.</p>
+</div>
+<div class="relative pl-10">
+<div class="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-tertiary ring-4 ring-surface-container-high"></div>
+<p class="text-xs font-bold text-tertiary">오전 09:12</p>
+<p class="text-sm font-bold">신규 미디어 업로드</p>
+<p class="text-xs text-on-surface-variant">박지민 강사가 서부 허브 리허설 비디오 8건을 업로드했습니다.</p>
+</div>
+<div class="relative pl-10">
+<div class="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-outline ring-4 ring-surface-container-high"></div>
+<p class="text-xs font-bold text-on-surface-variant">어제</p>
+<p class="text-sm font-bold">시스템 유지보수</p>
+<p class="text-xs text-on-surface-variant">주간 백업 및 최적화 작업이 성공적으로 완료되었습니다.</p>
+</div>
+<div class="relative pl-10">
+<div class="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-primary-container ring-4 ring-surface-container-high"></div>
+<p class="text-xs font-bold text-on-primary-container">어제</p>
+<p class="text-sm font-bold">신규 강사 등록</p>
+<p class="text-xs text-on-surface-variant">세종 센터에 신규 강사 '최민수'가 등록되었습니다.</p>
+</div>
+</div>
+<button class="w-full mt-8 py-3 bg-surface rounded-full text-xs font-bold text-on-surface-variant hover:bg-surface-container transition-colors">
+                    전체 감사 로그 보기
+                </button>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for Operations -->
+<button class="fixed bottom-8 right-8 w-16 h-16 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-xl hover:scale-105 transition-transform z-50 group">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">add_task</span>
+<span class="absolute right-20 bg-inverse-surface text-inverse-on-surface px-4 py-2 rounded-lg text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">작업 태스크 생성</span>
+</button>
+</body></html>

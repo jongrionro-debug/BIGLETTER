@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>강사 대시보드 - 두레 하모니</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#716600",
+                        "on-secondary-fixed": "#201c00",
+                        "on-secondary-fixed-variant": "#504700",
+                        "surface-container": "#f2ede4",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e7e2d9",
+                        "tertiary-container": "#00fdfc",
+                        "on-primary-fixed-variant": "#504700",
+                        "on-tertiary-fixed-variant": "#00504f",
+                        "surface-tint": "#6a5f00",
+                        "surface-container-high": "#ece8df",
+                        "on-background": "#1d1c16",
+                        "primary-fixed-dim": "#dec800",
+                        "surface-container-low": "#f8f3ea",
+                        "on-secondary-container": "#6e6316",
+                        "on-surface-variant": "#4b4732",
+                        "tertiary-fixed": "#00fcfb",
+                        "error": "#ba1a1a",
+                        "tertiary": "#006a69",
+                        "primary": "#6a5f00",
+                        "surface-container-highest": "#e7e2d9",
+                        "secondary-fixed-dim": "#d6c871",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#cdc7aa",
+                        "outline": "#7c775f",
+                        "surface-dim": "#ded9d1",
+                        "error-container": "#ffdad6",
+                        "background": "#fef9f0",
+                        "primary-container": "#fee500",
+                        "on-surface": "#1d1c16",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#007171",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#00dddc",
+                        "surface": "#fef9f0",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#f5f0e7",
+                        "secondary": "#695f11",
+                        "surface-bright": "#fef9f0",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#dec800",
+                        "on-primary-fixed": "#201c00",
+                        "on-tertiary-fixed": "#002020",
+                        "primary-fixed": "#fde400",
+                        "secondary-fixed": "#f3e48a",
+                        "inverse-surface": "#32302b",
+                        "secondary-container": "#f0e187"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shift-bg { background-color: #f2ede4; }
+        .no-line-rule { border: none !important; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-72 flex-col fixed left-0 top-0 bg-[#f2ede4] dark:bg-stone-900 font-['Plus_Jakarta_Sans'] antialiased text-sm font-medium tracking-tight flex p-6 gap-2 z-50">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="두레 하모니 로고" data-alt="Minimalist abstract logo for a community music school in warm yellow and charcoal colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCirafBoGZXPAcINN4eMANSeHTNTvo4m1ce_yn48xyMKAcfJuoOzZF26gRrUXLHSc_3D8zCjpCdJ3shxeY41krrJQCTIVBvdWrsj4al5JbSe_OJP9ogdnPJvD9nRM7C3kREA8hMSVhS3vVdfWkqKn9S2pHTwHTqpw5dwAyK6fSTEFFk4hA4rDLPckvTaCc9_KsYY_PQ0ZMwUvvgtLVDtrL1OSMkrIVyKD3WWSA_jGwA6oplyt9DMFe2j4EBLopThdSEwoF6WlQ2UmI"/>
+</div>
+<div>
+<h1 class="text-2xl font-bold tracking-tighter text-[#1d1c16] dark:text-[#fef9f0]">두레 하모니</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/70">커뮤니티 운영 시스템</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1 flex-1">
+<!-- Active Tab: 강사 대시보드 -->
+<a class="bg-[#fee500] text-[#1d1c16] rounded-full font-bold scale-[0.98] flex items-center gap-3 px-4 py-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span>강사 대시보드</span>
+</a>
+<a class="text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 hover:scale-[0.98] transition-all duration-200 flex items-center gap-3 px-4 py-3 rounded-full" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>학생 관리</span>
+</a>
+<a class="text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 hover:scale-[0.98] transition-all duration-200 flex items-center gap-3 px-4 py-3 rounded-full" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span>수업 관리</span>
+</a>
+<div class="my-4 h-px bg-outline-variant/20 mx-4"></div>
+<a class="text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 hover:scale-[0.98] transition-all duration-200 flex items-center gap-3 px-4 py-3 rounded-full" href="#">
+<span class="material-symbols-outlined">settings_applications</span>
+<span>운영 대시보드</span>
+</a>
+<a class="text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 hover:scale-[0.98] transition-all duration-200 flex items-center gap-3 px-4 py-3 rounded-full" href="#">
+<span class="material-symbols-outlined">badge</span>
+<span>멤버 관리</span>
+</a>
+<a class="text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 hover:scale-[0.98] transition-all duration-200 flex items-center gap-3 px-4 py-3 rounded-full" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span>기록 관리</span>
+</a>
+<a class="text-[#4b4732] dark:text-stone-400 hover:bg-stone-200/50 hover:scale-[0.98] transition-all duration-200 flex items-center gap-3 px-4 py-3 rounded-full" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span>인사이트</span>
+</a>
+</nav>
+<div class="mt-auto p-4 bg-surface-container-high rounded-xl">
+<div class="flex items-center gap-3">
+<img alt="사용자 프로필" class="w-10 h-10 rounded-full object-cover" data-alt="Professional portrait of a friendly female music teacher in a sunlit studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA0Hegg6xKo_MlcGpghpzytAvR9viFRtpHy24MSXIxkvQ766aESeG0L-v5pNDC1N-Qpaxv2aq1x4ceDqrHHRhGq28SatPiXo1XwzrboRLg1TqVjftEpu3i-vGx5ptGYQ2eSwyUuRmEDNXCnHohFW_LFFdzYba70wCtuGB_DIeh9VkTV1o31khQ04pSTZP9Me3drsxlR3JxWUH8xYv3coXxoiQwzCBIOkGDKHMaggzxDG6vs5bKYNy433ljfjxfsHTxPSoCzC1D0Sc"/>
+<div class="overflow-hidden">
+<p class="font-bold text-on-surface truncate">사라 젠킨스</p>
+<p class="text-xs text-on-surface-variant truncate">수석 피아노 강사</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-18rem)] h-16 bg-[#fef9f0]/80 dark:bg-stone-950/80 backdrop-blur-xl flex justify-between items-center px-8 z-40 shadow-sm dark:shadow-none font-['Plus_Jakarta_Sans'] font-semibold">
+<div class="flex items-center bg-surface-container-low px-4 py-2 rounded-full w-96">
+<span class="material-symbols-outlined text-outline text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-on-surface-variant/50" placeholder="학생 또는 수업 검색..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-[#4b4732] hover:bg-[#f2ede4] dark:hover:bg-stone-800 rounded-full transition-colors duration-300 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 text-[#4b4732] hover:bg-[#f2ede4] dark:hover:bg-stone-800 rounded-full transition-colors duration-300">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-72 pt-16 p-8">
+<!-- Dashboard Header -->
+<div class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="text-4xl font-extrabold tracking-tight text-on-surface">강사 대시보드</h2>
+<p class="text-on-surface-variant mt-1 text-lg">어서 오세요, 사라 강사님. 오늘의 일정을 확인해 보세요.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-3 bg-surface-container-highest text-on-surface font-bold rounded-full hover:scale-[0.98] transition-transform">
+                전체 일정 보기
+            </button>
+<button class="px-6 py-3 bg-primary-container text-on-primary-container font-bold rounded-full hover:scale-[0.98] transition-transform shadow-md">
+                + 새 수업 일지 작성
+            </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Summary Metrics Cards -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<!-- Today's Classes -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm flex flex-col justify-between h-48 border-l-8 border-primary-container">
+<span class="material-symbols-outlined text-primary text-3xl">event_upcoming</span>
+<div>
+<p class="text-5xl font-black text-on-surface">06</p>
+<p class="text-on-surface-variant font-bold uppercase tracking-widest text-xs mt-1">오늘의 수업</p>
+</div>
+</div>
+<!-- Attendance Rate -->
+<div class="bg-tertiary-container/20 p-8 rounded-xl shadow-sm flex flex-col justify-between h-48 border-l-8 border-tertiary">
+<span class="material-symbols-outlined text-tertiary text-3xl">how_to_reg</span>
+<div>
+<p class="text-5xl font-black text-on-surface">94<span class="text-2xl">%</span></p>
+<p class="text-on-surface-variant font-bold uppercase tracking-widest text-xs mt-1">출석률</p>
+</div>
+</div>
+<!-- Document Completion -->
+<div class="bg-surface-container p-8 rounded-xl shadow-sm flex flex-col justify-between h-48 border-l-8 border-outline">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl">task_alt</span>
+<div>
+<p class="text-5xl font-black text-on-surface">88<span class="text-2xl">%</span></p>
+<p class="text-on-surface-variant font-bold uppercase tracking-widest text-xs mt-1">일지 완료율</p>
+</div>
+</div>
+</div>
+<!-- Schedule & Last Submission -->
+<div class="col-span-12 lg:col-span-8 grid grid-cols-1 gap-6">
+<!-- Calendar / Schedule View -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="p-6 bg-surface-container-low flex justify-between items-center">
+<h3 class="font-bold text-xl flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+                        예정된 수업 일정
+                    </h3>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-variant rounded-lg"><span class="material-symbols-outlined">chevron_left</span></button>
+<span class="px-4 py-2 bg-white rounded-lg text-sm font-bold shadow-sm">2023년 10월 24일</span>
+<button class="p-2 hover:bg-surface-variant rounded-lg"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<!-- Schedule Item 1 -->
+<div class="flex items-center gap-6 p-4 hover:bg-surface-container-low rounded-xl transition-colors group">
+<div class="w-16 text-center">
+<p class="text-xs font-bold text-on-surface-variant">09:00</p>
+<p class="text-[10px] text-outline">오전</p>
+</div>
+<div class="w-2 h-12 bg-primary rounded-full"></div>
+<div class="flex-1">
+<h4 class="font-bold text-lg">클래식 피아노 이론</h4>
+<p class="text-sm text-on-surface-variant">302호 • 학생 12명</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 bg-primary-container px-4 py-2 rounded-full text-xs font-bold transition-opacity">
+                            출석 체크
+                        </button>
+</div>
+<!-- Schedule Item 2 -->
+<div class="flex items-center gap-6 p-4 hover:bg-surface-container-low rounded-xl transition-colors group">
+<div class="w-16 text-center">
+<p class="text-xs font-bold text-on-surface-variant">11:30</p>
+<p class="text-[10px] text-outline">오전</p>
+</div>
+<div class="w-2 h-12 bg-tertiary rounded-full"></div>
+<div class="flex-1">
+<h4 class="font-bold text-lg">재즈 즉흥 연주 (개인 레슨)</h4>
+<p class="text-sm text-on-surface-variant">메인 홀 • 리오 킹스턴</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 bg-primary-container px-4 py-2 rounded-full text-xs font-bold transition-opacity">
+                            일지 작성 시작
+                        </button>
+</div>
+<!-- Schedule Item 3 -->
+<div class="flex items-center gap-6 p-4 hover:bg-surface-container-low rounded-xl transition-colors group">
+<div class="w-16 text-center">
+<p class="text-xs font-bold text-on-surface-variant">02:00</p>
+<p class="text-[10px] text-outline">오후</p>
+</div>
+<div class="w-2 h-12 bg-outline rounded-full"></div>
+<div class="flex-1">
+<h4 class="font-bold text-lg">고급 작곡법</h4>
+<p class="text-sm text-on-surface-variant">가상 스튜디오 • 학생 8명</p>
+</div>
+<button class="opacity-0 group-hover:opacity-100 bg-primary-container px-4 py-2 rounded-full text-xs font-bold transition-opacity">
+                            강의 참여
+                        </button>
+</div>
+</div>
+</section>
+<!-- Last Submission Status -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm p-8 relative overflow-hidden">
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-primary-container/20 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-xl">최근 제출 일지</h3>
+<span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            승인됨
+                        </span>
+</div>
+<div class="flex items-start gap-6">
+<div class="flex-1">
+<p class="text-sm text-on-surface-variant mb-1">작성 대상:</p>
+<p class="font-bold text-lg">화요 저녁 앙상블 — 10월 22일</p>
+<div class="mt-4 flex gap-4">
+<div class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">attach_file</span>
+                                    lesson_summary_v1.pdf
+                                </div>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                    2시간 전 제출됨
+                                </div>
+</div>
+</div>
+<div class="w-px h-16 bg-outline-variant/30 hidden md:block"></div>
+<div class="md:px-8 text-center">
+<p class="text-[10px] font-bold text-outline uppercase tracking-widest">점수</p>
+<p class="text-3xl font-black text-on-surface">A+</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Management Quick Access -->
+<div class="col-span-12 grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+<!-- Student Management Quick -->
+<div class="bg-surface-container hover:bg-surface-variant transition-colors p-8 rounded-xl flex items-center gap-6 group cursor-pointer">
+<div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl text-primary" style="font-variation-settings: 'FILL' 1;">person_search</span>
+</div>
+<div>
+<h4 class="text-xl font-bold">학생 관리</h4>
+<p class="text-on-surface-variant text-sm">출석 현황, 학생 명단 및 성적 기록을 효율적으로 관리하세요.</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-outline group-hover:translate-x-2 transition-transform">arrow_forward_ios</span>
+</div>
+<!-- Lesson Management Quick -->
+<div class="bg-secondary-container/30 hover:bg-secondary-container/50 transition-colors p-8 rounded-xl flex items-center gap-6 group cursor-pointer">
+<div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl text-secondary" style="font-variation-settings: 'FILL' 1;">upload_file</span>
+</div>
+<div>
+<h4 class="text-xl font-bold">수업 관리</h4>
+<p class="text-on-surface-variant text-sm">수업 일지 및 자료를 업로드하고 커리큘럼을 업데이트하세요.</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-outline group-hover:translate-x-2 transition-transform">arrow_forward_ios</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-8 right-8 w-16 h-16 bg-primary-container text-on-primary-container rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'wght' 600;">add</span>
+<span class="absolute right-full mr-4 bg-on-surface text-white px-4 py-2 rounded-lg text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+        새 일지 작성
+    </span>
+</button>
+</body></html>

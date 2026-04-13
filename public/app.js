@@ -1,7 +1,15 @@
 const viewMeta = {
   teacher: {
     kicker: "강사 탭",
-    title: "오늘 수업 통합 기록"
+    title: "강사 대시보드"
+  },
+  students: {
+    kicker: "학생 관리",
+    title: "학생 관리"
+  },
+  classes: {
+    kicker: "수업 관리",
+    title: "수업 관리"
   },
   operations: {
     kicker: "운영 채널",
@@ -22,8 +30,8 @@ const viewMeta = {
 };
 
 const accessMap = {
-  teacher: ["teacher"],
-  operator: ["operations", "permissions", "records", "insights"]
+  teacher: ["teacher", "students", "classes"],
+  operator: ["operations", "permissions", "records"]
 };
 
 const stateCycle = {
@@ -106,6 +114,30 @@ const attendanceEntries = [
   { id: 2, name: "이나은", grade: "3학년", state: "present" },
   { id: 3, name: "박민준", grade: "4학년", state: "late" },
   { id: 4, name: "최서윤", grade: "2학년", state: "present" }
+];
+
+const teacherSchedule = [
+  {
+    time: "09:00",
+    period: "오전",
+    title: "다로리마을 목공 메이커",
+    desc: "실습실 A · 학생 4명",
+    tone: "olive"
+  },
+  {
+    time: "11:30",
+    period: "오전",
+    title: "청도읍 생태 관찰",
+    desc: "야외 수업장 · 학생 5명",
+    tone: "teal"
+  },
+  {
+    time: "14:00",
+    period: "오후",
+    title: "화양읍 마을 탐구",
+    desc: "커뮤니티룸 · 학생 5명",
+    tone: "stone"
+  }
 ];
 
 const teacherForm = {
@@ -259,13 +291,13 @@ const teacherInputs = {
 };
 
 const operationsNodes = {
-  completed: document.getElementById("ops-completed-count"),
-  pending: document.getElementById("ops-pending-count"),
-  files: document.getElementById("ops-files-count"),
-  review: document.getElementById("ops-review-count"),
-  statusRows: document.getElementById("status-rows"),
-  activityLog: document.getElementById("activity-log"),
-  riskSummary: document.getElementById("risk-summary")
+  totalSessions: document.getElementById("ops-total-sessions"),
+  completionRate: document.getElementById("ops-completion-rate"),
+  fileTotal: document.getElementById("ops-file-total"),
+  villageBoard: document.getElementById("ops-village-board"),
+  leaderBoard: document.getElementById("ops-leader-board"),
+  submissionTable: document.getElementById("ops-submission-table"),
+  activityLog: document.getElementById("activity-log")
 };
 
 const insightNodes = {
@@ -285,7 +317,8 @@ const lastSubmissionNodes = {
   copy: document.getElementById("last-submission-copy"),
   time: document.getElementById("last-submission-time"),
   status: document.getElementById("last-submission-status"),
-  missing: document.getElementById("last-submission-missing")
+  missing: document.getElementById("last-submission-missing"),
+  grade: document.getElementById("teacher-grade-value")
 };
 
 const teacherPrepNodes = {
@@ -293,6 +326,14 @@ const teacherPrepNodes = {
   attendance: document.getElementById("prep-step-attendance"),
   journal: document.getElementById("prep-step-journal"),
   files: document.getElementById("prep-step-files")
+};
+
+const teacherDashboardNodes = {
+  todayCount: document.getElementById("teacher-today-count"),
+  attendanceRate: document.getElementById("teacher-attendance-rate"),
+  journalRate: document.getElementById("teacher-journal-rate"),
+  scheduleDate: document.getElementById("teacher-schedule-date"),
+  scheduleList: document.getElementById("teacher-schedule-list")
 };
 
 function getCurrentUser() {
@@ -339,6 +380,78 @@ function countAttendanceState(targetState) {
 
 function buildAttendanceSummary() {
   return `출석 ${countAttendanceState("present")}명, 지각 ${countAttendanceState("late")}명, 결석 ${countAttendanceState("absent")}명`;
+}
+
+function formatDisplayDate(dateString) {
+  const date = new Date(`${dateString}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return dateString;
+
+  return date.toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+}
+
+function getTeacherCompletionStats() {
+  const errors = validateTeacherForm();
+  const presentCount = countAttendanceState("present");
+  const contextReady = Boolean(teacherForm.date && teacherForm.village && teacherForm.session);
+  const attendanceDone = attendanceEntries.length > 0;
+  const journalDone = teacherForm.summary.trim().length > 0;
+  const filesDone = teacherForm.attachments.length > 0;
+  const completedChunks = [
+    contextReady,
+    attendanceDone,
+    journalDone,
+    filesDone
+  ].filter(Boolean).length;
+  const score = Math.round((completedChunks / 4) * 100);
+  const attendanceRate = attendanceEntries.length
+    ? Math.round((presentCount / attendanceEntries.length) * 100)
+    : 0;
+
+  return {
+    errors,
+    presentCount,
+    contextReady,
+    attendanceDone,
+    journalDone,
+    filesDone,
+    score,
+    attendanceRate
+  };
+}
+
+function renderTeacherDashboard() {
+  const stats = getTeacherCompletionStats();
+  const activeSession = teacherForm.session.split(" / ")[0];
+
+  teacherDashboardNodes.todayCount.textContent = String(teacherSchedule.length);
+  teacherDashboardNodes.attendanceRate.textContent = `${stats.attendanceRate}%`;
+  teacherDashboardNodes.journalRate.textContent = `${stats.score}%`;
+  teacherDashboardNodes.scheduleDate.textContent = formatDisplayDate(teacherForm.date);
+  teacherDashboardNodes.scheduleList.innerHTML = teacherSchedule
+    .map((item) => {
+      const isActive =
+        item.title.includes(activeSession) ||
+        `${teacherForm.village} ${activeSession}`.includes(item.title);
+
+      return `
+        <div class="teacher-schedule-item${isActive ? " active" : ""}">
+          <div class="teacher-schedule-time">
+            <strong>${item.time}</strong>
+            <span>${item.period}</span>
+          </div>
+          <div class="teacher-schedule-accent tone-${item.tone}"></div>
+          <div class="teacher-schedule-copy">
+            <strong>${item.title}</strong>
+            <span>${item.desc}</span>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
 }
 
 function getFilteredLoginUsers() {
@@ -399,7 +512,9 @@ function renderNav() {
 }
 
 function updateClock() {
-  clockNode.textContent = getCurrentTimeLabel();
+  if (clockNode) {
+    clockNode.textContent = getCurrentTimeLabel();
+  }
 }
 
 function showToast(message) {
@@ -414,6 +529,7 @@ function showToast(message) {
 
 function switchView(viewName, options = {}) {
   const { force = false } = options;
+  const teacherWorkViews = ["students", "classes"];
 
   if (!isViewAllowed(viewName)) {
     showToast("현재 계정으로는 이 메뉴에 접근할 수 없습니다.");
@@ -423,8 +539,8 @@ function switchView(viewName, options = {}) {
   if (
     !force &&
     appState.teacherDirty &&
-    appState.activeView === "teacher" &&
-    viewName !== "teacher"
+    teacherWorkViews.includes(appState.activeView) &&
+    viewName !== appState.activeView
   ) {
     const shouldLeave = window.confirm(
       "아직 제출하지 않은 변경 사항이 있습니다. 이동하면 현재 입력 흐름이 끊길 수 있어요. 계속할까요?"
@@ -436,8 +552,12 @@ function switchView(viewName, options = {}) {
   views.forEach((view) => {
     view.classList.toggle("active", view.dataset.viewPanel === viewName);
   });
-  titleNode.textContent = viewMeta[viewName].title;
-  kickerNode.textContent = viewMeta[viewName].kicker;
+  if (titleNode) {
+    titleNode.textContent = viewMeta[viewName].title;
+  }
+  if (kickerNode) {
+    kickerNode.textContent = viewMeta[viewName].kicker;
+  }
   renderNav();
 }
 
@@ -549,19 +669,16 @@ function renderFeedbackList() {
 }
 
 function renderTeacherSummary() {
-  const errors = validateTeacherForm();
-  const presentCount = countAttendanceState("present");
-  const attendanceDone = attendanceEntries.length > 0;
-  const contextReady = Boolean(teacherForm.date && teacherForm.village && teacherForm.session);
-  const journalDone = teacherForm.summary.trim().length > 0;
-  const filesDone = teacherForm.attachments.length > 0;
-  const completedChunks = [
-    contextReady,
+  const stats = getTeacherCompletionStats();
+  const {
+    errors,
+    presentCount,
     attendanceDone,
+    contextReady,
     journalDone,
-    filesDone
-  ].filter(Boolean).length;
-  const score = Math.round((completedChunks / 4) * 100);
+    filesDone,
+    score
+  } = stats;
 
   contextSummary.textContent = contextReady
     ? "날짜/마을/수업 선택 완료"
@@ -577,6 +694,7 @@ function renderTeacherSummary() {
   teacherPrepNodes.attendance?.classList.toggle("is-complete", attendanceDone);
   teacherPrepNodes.journal?.classList.toggle("is-complete", journalDone);
   teacherPrepNodes.files?.classList.toggle("is-complete", filesDone);
+  renderTeacherDashboard();
 
   if (errors.length) {
     teacherStatusChip.textContent = "제출 전 확인 필요";
@@ -598,6 +716,12 @@ function updateLastSubmission(record) {
   if (record.status === "attendance_pending") missing.push("출석");
   if (record.status === "journal_missing") missing.push("교육일지");
   if (record.status === "files_review") missing.push("운영자 검토");
+  const gradeMap = {
+    complete: "A+",
+    files_review: "A",
+    journal_missing: "C",
+    attendance_pending: "B-"
+  };
 
   appState.lastSubmission = {
     title: `${record.title} / ${record.date.replaceAll("-", ".")}`,
@@ -612,6 +736,9 @@ function updateLastSubmission(record) {
   lastSubmissionNodes.time.textContent = appState.lastSubmission.time;
   lastSubmissionNodes.status.textContent = appState.lastSubmission.status;
   lastSubmissionNodes.missing.textContent = appState.lastSubmission.missing;
+  if (lastSubmissionNodes.grade) {
+    lastSubmissionNodes.grade.textContent = gradeMap[record.status] || "B+";
+  }
 }
 
 function upsertRecord(nextRecord) {
@@ -723,52 +850,77 @@ function handleAttachmentRemove(index) {
 }
 
 function renderOperations() {
+  const totalSessions = records.length;
   const completedCount = records.filter((record) => record.status === "complete").length;
-  const pendingCount = records.filter((record) =>
-    ["journal_missing", "attendance_pending"].includes(record.status)
-  ).length;
   const fileCount = records.reduce((sum, record) => sum + record.files.length, 0);
-  const reviewCount = records.filter((record) => record.status !== "complete").length;
+  const completionRate = totalSessions ? Math.round((completedCount / totalSessions) * 100) : 0;
 
-  operationsNodes.completed.textContent = String(completedCount);
-  operationsNodes.pending.textContent = String(pendingCount);
-  operationsNodes.files.textContent = String(fileCount);
-  operationsNodes.review.textContent = String(reviewCount);
+  operationsNodes.totalSessions.textContent = String(totalSessions);
+  operationsNodes.completionRate.textContent = `${completionRate}%`;
+  operationsNodes.fileTotal.textContent = String(fileCount);
 
-  operationsNodes.statusRows.innerHTML = records
-    .slice(0, 4)
-    .map((record, index) => {
-      const meta = getStatusMeta(record.status);
-      const villageCode = `V${String(index + 12).padStart(2, "0")}`;
-      const progressMap = {
-        complete: 100,
-        journal_missing: 72,
-        attendance_pending: 36,
-        files_review: 84
-      };
-      const progressValue = progressMap[record.status] || 60;
+  const villageAgg = aggregateBy(records, (record) => record.village).slice(0, 4);
+  operationsNodes.villageBoard.innerHTML = villageAgg
+    .map(([label, value], index) => {
+      const ratio = value.total ? Math.round((value.complete / value.total) * 100) : 0;
+      const displayRatio = ratio || 28;
       return `
-        <div class="status-row">
-          <div class="status-row-main">
-            <div class="status-row-code">${villageCode}</div>
-            <div class="status-row-copy">
-              <strong>${record.title}</strong>
-              <span>${formatRecordTeacher(record)} · ${record.village}</span>
-            </div>
+        <div class="ops-village-row">
+          <div class="ops-village-copy">
+            <strong>${label}</strong>
+            <span>${ratio}/100</span>
           </div>
-          <div class="status-row-side">
-            <div class="status-progress">
-              <span>완성도</span>
-              <div class="status-progress-bar">
-                <div class="status-progress-fill" style="width: ${progressValue}%"></div>
-              </div>
-            </div>
-            <strong class="${meta.className}">${meta.label}</strong>
+          <div class="ops-village-bar">
+            <div class="ops-village-fill${index === 2 ? " accent" : ""}" style="width: ${displayRatio}%"></div>
           </div>
         </div>
       `;
     })
     .join("");
+
+  const tierLabels = ["플래티넘", "골드", "실버"];
+  const teacherAgg = aggregateBy(records, (record) => formatRecordTeacher(record)).slice(0, 3);
+  operationsNodes.leaderBoard.innerHTML = teacherAgg
+    .map(([label, value], index) => `
+      <div class="ops-leader-row">
+        <div class="ops-leader-avatar">${label.slice(0, 2)}</div>
+        <div class="ops-leader-copy">
+          <strong>${label}</strong>
+          <span>${value.total}세션 · ${Math.round((value.complete / value.total) * 100)}% 정시 제출</span>
+        </div>
+        <div class="ops-leader-rank">
+          <strong>${tierLabels[index] || "등급"}</strong>
+          <span>등급</span>
+        </div>
+      </div>
+    `)
+    .join("");
+
+  operationsNodes.submissionTable.innerHTML = `
+    <div class="ops-table-head">
+      <span>마을</span>
+      <span>강사</span>
+      <span>상태</span>
+      <span>파일</span>
+      <span>작업</span>
+    </div>
+    ${records
+      .slice(0, 4)
+      .map((record) => {
+        const meta = getStatusMeta(record.status);
+        const actionIcon = record.files.length ? "보기" : "확인";
+        return `
+          <div class="ops-table-row">
+            <span>${record.village}</span>
+            <span>${formatRecordTeacher(record)}</span>
+            <span><strong class="${meta.className}">${meta.label}</strong></span>
+            <span>${record.files.length}개 파일</span>
+            <span class="ops-table-action">${actionIcon}</span>
+          </div>
+        `;
+      })
+      .join("")}
+  `;
 
   operationsNodes.activityLog.innerHTML = activityLog
     .slice(0, 5)
@@ -787,16 +939,6 @@ function renderOperations() {
       `;
     })
     .join("");
-
-  const journalMissing = records.filter((record) => record.status === "journal_missing").length;
-  const fileReview = records.filter((record) => record.status === "files_review").length;
-  const attendancePending = records.filter((record) => record.status === "attendance_pending").length;
-
-  operationsNodes.riskSummary.innerHTML = `
-    <li><span>교육일지 미제출</span><strong>${journalMissing}건</strong></li>
-    <li><span>운영자 검토 대기</span><strong>${fileReview}건</strong></li>
-    <li><span>출석 입력 대기</span><strong>${attendancePending}건</strong></li>
-  `;
 }
 
 function getFilteredUsers() {
@@ -1195,7 +1337,7 @@ function handleLogin() {
 }
 
 function handleLogout() {
-  if (appState.teacherDirty) {
+  if (appState.teacherDirty && ["students", "classes"].includes(appState.activeView)) {
     const shouldLeave = window.confirm(
       "저장되지 않은 강사 입력 내용이 있습니다. 메인 홈으로 돌아갈까요?"
     );
@@ -1250,6 +1392,13 @@ function bindEvents() {
 
   document.querySelectorAll("[data-goto]").forEach((button) => {
     button.addEventListener("click", () => switchView(button.dataset.goto));
+  });
+
+  document.querySelectorAll("[data-scroll-target]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = document.getElementById(button.dataset.scrollTarget);
+      target?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   });
 
   document.getElementById("save-draft").addEventListener("click", handleSaveDraft);
@@ -1339,7 +1488,9 @@ function initialize() {
   renderOperations();
   renderInsights();
   updateClock();
-  window.setInterval(updateClock, 1000);
+  if (clockNode) {
+    window.setInterval(updateClock, 1000);
+  }
   bindEvents();
 }
 
